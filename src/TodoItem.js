@@ -8,10 +8,10 @@ class TodoItem extends Component {
     }
     //当父组件的render函数被运行时，它的子组件render都将被重新运行
     render() {
-        const { content, test } = this.props
+        const { content } = this.props
         return (
             <div onClick={this.handleDeleteItem}>
-                {test}-{content}
+                {content}
             </div>
         )
     }
@@ -20,16 +20,20 @@ class TodoItem extends Component {
         const { deleteItem, index } = this.props
         deleteItem(index)
     }
+
+    shouldComponentUpdate(nextProps,nextState) {
+        if(this.props.content !== nextProps.content){
+            return true
+        }else{
+            return false
+        }
+    }
 }
 
 TodoItem.propTypes = {
     content: PropTypes.string,
     deleteItem: PropTypes.func,
     index: PropTypes.number
-}
-
-TodoItem.defaultProps = {
-    test: 'hello'
 }
 
 export default TodoItem
